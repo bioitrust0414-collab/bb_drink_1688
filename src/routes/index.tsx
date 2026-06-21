@@ -275,7 +275,7 @@ function Index() {
               </div>
               <div className="mb-4 flex w-full justify-center rounded-2xl border border-dashed border-brand/15 bg-brand-soft/40 p-2.5">
                 <img
-                  src={bbProduct}
+                  src={bbProduct.url}
                   alt="BB神采速纖飲 明星展示"
                   width={800}
                   height={1024}
@@ -565,7 +565,7 @@ function Index() {
                 <h3 className="mb-4 text-xl font-extrabold text-foreground">未來可模組化升級：</h3>
                 <div className="mb-4 flex w-full flex-col items-center justify-center rounded-2xl border border-dashed border-brand/20 bg-card p-4 shadow-sm">
                   <img
-                    src={bbProduct}
+                    src={bbProduct.url}
                     alt="BB神采速纖飲 實物包裝盒"
                     width={800}
                     height={1024}
