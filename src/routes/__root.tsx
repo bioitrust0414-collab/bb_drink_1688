@@ -77,10 +77,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "源素萃取 YUAN — 科學保健食品" },
-      { name: "description", content: "源素萃取 YUAN 結合現代生物科學與草本精華，提供高吸收率、透明實證的保健食品。" },
-      { property: "og:title", content: "源素萃取 YUAN — 科學保健食品" },
-      { property: "og:description", content: "高吸收率、透明科學實證的保健食品，為繁忙生活打造的精準營養方案。" },
+      { title: "bioid full your life BB神采速纖飲｜結合現代生物科技與本草調和的日常活力管理" },
+      {
+        name: "description",
+        content:
+          "以醫學科技與本草調和為核心打造的 BB 神采速纖飲單頁式銷售網站，聚焦疲勞管理、日常狀態調護與關鍵健康元素。",
+      },
+      { property: "og:title", content: "BB神采速纖飲｜煥發神采活力，重塑纖體自信" },
+      {
+        property: "og:description",
+        content: "融合四大關鍵活力美妍因子，從底層啟動能量修復與代謝機制。",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -90,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@500;600;700&display=swap",
       },
     ],
   }),
