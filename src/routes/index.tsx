@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import bbBanner from "@/assets/bb-banner.jpg";
-import bbProduct from "@/assets/bb-product.jpg";
+import bbProduct from "@/assets/bb-product-box.png.asset.json";
 import bbStep1 from "@/assets/bb-step1.jpg";
 import bbStep2 from "@/assets/bb-step2.jpg";
 import bbStep3 from "@/assets/bb-step3.jpg";
@@ -275,7 +275,7 @@ function Index() {
               </div>
               <div className="mb-4 flex w-full justify-center rounded-2xl border border-dashed border-brand/15 bg-brand-soft/40 p-2.5">
                 <img
-                  src={bbProduct}
+                  src={bbProduct.url}
                   alt="BB神采速纖飲 明星展示"
                   width={800}
                   height={1024}
@@ -565,7 +565,7 @@ function Index() {
                 <h3 className="mb-4 text-xl font-extrabold text-foreground">未來可模組化升級：</h3>
                 <div className="mb-4 flex w-full flex-col items-center justify-center rounded-2xl border border-dashed border-brand/20 bg-card p-4 shadow-sm">
                   <img
-                    src={bbProduct}
+                    src={bbProduct.url}
                     alt="BB神采速纖飲 實物包裝盒"
                     width={800}
                     height={1024}
