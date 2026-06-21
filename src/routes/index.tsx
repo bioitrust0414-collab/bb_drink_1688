@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import bbBanner from "@/assets/bb-banner.jpg";
-import bbProduct from "@/assets/bb-product.jpg";
+import bbProduct from "@/assets/bb-product-box.png.asset.json";
 import bbStep1 from "@/assets/bb-step1.jpg";
 import bbStep2 from "@/assets/bb-step2.jpg";
 import bbStep3 from "@/assets/bb-step3.jpg";
