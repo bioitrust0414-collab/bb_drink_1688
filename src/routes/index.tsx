@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import bbBanner from "@/assets/bb-banner.jpg";
+import { ShoppingCart, Check, Crown } from "lucide-react";
+import bbBannerAsset from "@/assets/bb-banner-hero.png.asset.json";
 import bbProduct from "@/assets/bb-product-box.png.asset.json";
 import bbStep1 from "@/assets/bb-step1.jpg";
 import bbStep2 from "@/assets/bb-step2.jpg";
@@ -11,34 +12,39 @@ import bbBcaa from "@/assets/bb-bcaa.jpg";
 import bbBcomplex from "@/assets/bb-bcomplex.jpg";
 import bbPro from "@/assets/bb-scenario-pro.jpg";
 import bbWellness from "@/assets/bb-scenario-wellness.jpg";
+import { CartProvider, useCart } from "@/lib/cart";
+import { CartDrawer } from "@/components/CartDrawer";
+
+const bbBanner = bbBannerAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "bioid full your life BB神采速纖飲｜結合現代生物科技與本草調和的日常活力管理" },
+      { title: "BB神采速纖飲｜B COMPLEX & COLLAGEN｜國家健康食品認證 抗疲勞" },
       {
         name: "description",
         content:
-          "以醫學科技與本草調和為核心打造的 BB 神采速纖飲，聚焦疲勞管理、日常狀態調護與關鍵健康元素，國家健康食品認證 A00439。",
+          "bioid BB神采速纖飲，國家健康食品認證 衛部健食字第A00439號「抗疲勞功能」。膠原蛋白 × 牛磺酸 × BCAA × 維生素B群，由內而外養出神采自信。",
       },
-      { property: "og:title", content: "BB神采速纖飲｜煥發神采活力，重塑纖體自信" },
+      { property: "og:title", content: "BB神采速纖飲｜由內而外 養出神采自信" },
       {
         property: "og:description",
-        content: "融合四大關鍵活力美妍因子，從底層啟動能量修復與代謝機制。",
+        content: "專業配方 × 科學營養 × 美麗加倍，每日一包補充關鍵營養。",
       },
       { property: "og:image", content: bbBanner },
       { name: "twitter:image", content: bbBanner },
     ],
     links: [{ rel: "preload", as: "image", href: bbBanner, fetchpriority: "high" } as never],
   }),
-  component: Index,
+  component: IndexPage,
 });
 
 const navLinks = [
   { href: "#problem", label: "疲勞訊號" },
   { href: "#science", label: "調補運行" },
-  { href: "#formula", label: "四大活性成分" },
-  { href: "#offer", label: "客製諮詢" },
+  { href: "#formula", label: "四大成分" },
+  { href: "#spec", label: "商品規格" },
+  { href: "#order", label: "立即訂購" },
 ];
 
 const problems = [
@@ -71,39 +77,33 @@ const steps = [
 
 const formulas = [
   {
-    tag: "膠原蛋白 (Collagen)",
-    title: "彈力飽滿，守護底蘊",
+    tag: "膠原蛋白 Collagen",
+    title: "彈潤水嫩 守護底蘊",
     desc: "在配方中負責「築基防護」，保護因頻繁透支而脆弱的膠原網絡，撐起飽滿無瑕的自信輪廓。",
     bullets: ["鎖住基底彈力，水潤飽滿", "提升肌膚對外防禦屏障"],
     img: bbCollagen,
   },
   {
-    tag: "牛磺酸 (Taurine)",
-    title: "精力充沛，迅速回充",
+    tag: "牛磺酸 Taurine",
+    title: "精力充沛 迅速回充",
     desc: "經典且高效的精神補給因子，能深入支持身體細胞的正常代謝，幫您迅速甩開沈重拖沓感。",
-    bullets: ["提供高強度日間專注與元氣", "輔助能量平穩，不卡關"],
+    bullets: ["每包 720.18 ~ 1080.27 毫克牛磺酸", "輔助能量平穩，不卡關"],
     img: bbTaurine,
   },
   {
     tag: "BCAA 支鏈胺基酸",
-    title: "修復關鍵，續航防線",
+    title: "促進代謝 續航防線",
     desc: "充當「機體備用能源」，緩解高壓節奏下的能量掏空感，強健體魄、加速修復，提升日常行動耐力。",
     bullets: ["商務出差或高活動量之核心防護", "穩固底盤，維持形體充沛感"],
     img: bbBcaa,
   },
   {
-    tag: "精純複合 B 群",
-    title: "能量轉換，神采飛揚",
-    desc: "體內不可或缺的流暢推進器，優化深層能量循環通道，輔助將營運物質轉換為每日所需神采動力。",
-    bullets: ["改善體力運作效率，狀態不卡關", "輔助調節體質，保持神采不老"],
+    tag: "B 群營養",
+    title: "增強體力 神采飛揚",
+    desc: "體內不可或缺的流暢推進器，優化深層能量循環通道，輔助將營養物質轉換為每日所需神采動力。",
+    bullets: ["B1/B2/B6/B12、菸鹼醯胺、葉酸、生物素", "輔助調節體質，保持神采不老"],
     img: bbBcomplex,
   },
-];
-
-const trust = [
-  { n: "01", t: "痛點深度共情", d: "精準點出「累卻無處安頓、面色失去飽滿、恢復慢」等體感，用生動的「身體電力失衡」比喻，瞬間獲得受眾認同。" },
-  { n: "02", t: "「調補護暢」合理說服", d: "將科學數據與大眾耳熟能詳的調護養生相印證，解構四大精準因子，搭配「國家級小綠人健康食品標章」建立無敵信任。" },
-  { n: "03", t: "安全合規，消除抗拒", d: "主動下修醫療誇大詞彙，著重於日常調理、活力與健康自主管理，降低退單與法規風險，奠定長效品牌的誠信基石。" },
 ];
 
 const scenarios = [
@@ -111,38 +111,69 @@ const scenarios = [
     title: "高壓工作者｜日間精力透支",
     tag: "活力與精力消耗群體",
     tagColor: "clay",
-    desc: "面對繁重的商業決策與漫長會議，常在午後感覺專注力極限，甚至出現輕微虛空感、思維停滯，面色逐漸失去彈力。急需精力充沛與基底修復。",
-    bullets: ["極易引發高壓商務、上班族人士的共鳴", "可作為廣告落地頁的高頻點擊素材切角"],
+    desc: "面對繁重的商業決策與漫長會議，常在午後感覺專注力極限，甚至出現輕微虛空感、思維停滯，面色逐漸失去彈力。",
+    bullets: ["每天加班、會議連環，需要即時回充", "希望甩開咖啡因依賴，溫和提振狀態"],
     img: bbPro,
   },
   {
-    title: "注重調理者｜關注美妍與代謝",
+    title: "注重美妍者｜關注美麗與代謝",
     tag: "纖體自信與防禦群體",
     tagColor: "brand",
     desc: "注重精緻與生活品質，不希望只靠強效咖啡因透支體力。傾向透過溫補、調理，在飽滿肌膚彈力的同時，維持輕盈、流暢的窈窕體態。",
-    bullets: ["完美對接「膠原蛋白、纖體、神采」的高價值詞彙", "傳達品牌安心感，適合忠誠度極高的客戶經營"],
+    bullets: ["希望膠原蛋白彈潤水嫩，由內養顏", "在意代謝循環與輕盈體態管理"],
     img: bbWellness,
   },
+];
+
+const productSpecs = [
+  { k: "品牌名稱", v: "bioid" },
+  { k: "品名", v: "bioid 國家健康食品認證 BB神采速纖飲" },
+  { k: "健康食品許可證字號", v: "衛部健食字第 A00439 號「抗疲勞功能」" },
+  { k: "保健功效敘述", v: "經動物實驗結果，有助於延緩運動後疲勞發生" },
+  { k: "保健功效成分", v: "牛磺酸 720.18 ~ 1080.27 毫克／包" },
+  { k: "容量／規格", v: "10 包／盒" },
+  { k: "劑型", v: "液體" },
+  { k: "保存期限", v: "24 個月" },
+  { k: "產地", v: "台灣" },
+  { k: "貨源", v: "公司貨" },
+  { k: "國內負責廠商", v: "宏曄生物科技有限公司｜02-25953515" },
+  { k: "食品業者登錄字號", v: "A-127972230-00000-0" },
+];
+
+const ingredients =
+  "水、砂糖、蘋果濃縮汁、綜合莓果汁、牛磺酸、果寡醣、膠原蛋白、支鏈胺基酸、白葡萄濃縮汁、維生素C、綜合維生素B群（B2、B6、菸鹼醯胺、B1、B12、本多酸鈣、葉酸、生物素）、檸檬酸、香料、咖啡因、β-環狀糊精、甜菊醣苷（甜味劑）、醋磺內酯鉀（甜味劑）。";
+
+const planOptions = [
+  { id: "single", name: "BB 神采速纖飲", variant: "1 盒（10 包）", boxes: 1, badge: null as string | null },
+  { id: "trio", name: "BB 神采速纖飲", variant: "3 盒組（30 包）", boxes: 3, badge: "熱銷組合" },
+  { id: "six", name: "BB 神采速纖飲", variant: "6 盒尊享（60 包）", boxes: 6, badge: "最超值" },
 ];
 
 const faqs = [
   {
     q: "Q1｜BB 神采速纖飲跟一般的提神飲品有何不同？",
-    a: "一般的提神飲多依賴高劑量咖啡因強行逼出體力。本方案以調、補為基礎，透過國家級「健康食品認證」安全性背書，搭配膠原蛋白、牛磺酸、BCAA與B群，是由內而外、溫和穩健的「深層培元」，兼顧形體神采。",
+    a: "一般的提神飲多依賴高劑量咖啡因強行逼出體力。本產品已取得「衛部健食字第A00439號」抗疲勞功能健康食品認證，並搭配膠原蛋白、牛磺酸、BCAA 與 B 群，由內而外溫和調補。",
   },
   {
     q: "Q2｜什麼時候飲用效果最好？",
-    a: "建議在早晨隨餐或午後工作前飲用一包，能有效應對高強度工作挑戰；若有運動習慣者，亦可於運動前後飲用，藉由 BCAA 加速修復關鍵。",
+    a: "建議每日 1 包，於早晨隨餐或午後工作前飲用；若有運動習慣者，亦可於運動前後飲用，藉由 BCAA 加速修復。",
   },
   {
     q: "Q3｜小綠人「健康食品認證」代表什麼？",
-    a: "代表本產品經衛生福利部審查評估，其功效性與生物安全性皆通過嚴謹的科學論證，且全批次重金屬／農藥零殘留，保障消費者長期食用的安心感。",
+    a: "代表本產品經衛生福利部審查評估，其功效性與安全性皆通過科學論證，並通過批次重金屬／農藥檢驗，保障消費者長期食用安心。",
   },
   {
-    q: "Q4｜素食者、經期中或特殊體質可以食用嗎？",
-    a: "本方案所採成分皆為溫和的生物活性因子。唯因含有高純度動物性膠原蛋白（修復飽滿關鍵），純素食者請斟酌；懷孕、特殊體質生理波動較大，建議使用前諮詢您的醫師或專業醫事人員。",
+    q: "Q4｜素食者、孕期或特殊體質可以食用嗎？",
+    a: "本品含有動物性膠原蛋白與少量咖啡因，純素食者及咖啡因敏感者請斟酌；孕期、哺乳期或特殊體質者，建議使用前諮詢醫師或專業醫事人員。",
+  },
+  {
+    q: "Q5｜原價與會員價的差別？",
+    a: "單盒原價 NT$1,280；加入 LINE 會員即享會員價 NT$980/盒。會員價於購物車自動套用，無需額外輸入優惠碼。",
   },
 ];
+
+const REGULAR_PRICE = 1280;
+const MEMBER_PRICE = 980;
 
 function LineIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -156,10 +187,12 @@ function LineButton({
   className = "",
   size = "md",
   label,
+  onClick,
 }: {
   className?: string;
   size?: "sm" | "md" | "lg";
   label: string;
+  onClick?: () => void;
 }) {
   const sizeMap = {
     sm: "px-4 py-2 text-xs rounded-full",
@@ -169,6 +202,7 @@ function LineButton({
   return (
     <button
       type="button"
+      onClick={onClick}
       className={`inline-flex items-center justify-center gap-1.5 bg-line text-white font-bold shadow-lg shadow-line/20 transition-all hover:-translate-y-0.5 hover:opacity-95 ${sizeMap[size]} ${className}`}
     >
       <LineIcon className={size === "lg" ? "h-5 w-5" : "h-4 w-4"} />
@@ -177,35 +211,81 @@ function LineButton({
   );
 }
 
+function CartButton() {
+  const { count, setOpen } = useCart();
+  return (
+    <button
+      type="button"
+      onClick={() => setOpen(true)}
+      className="relative grid h-10 w-10 place-items-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-secondary"
+      aria-label="購物車"
+    >
+      <ShoppingCart className="h-4 w-4" />
+      {count > 0 && (
+        <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-clay px-1 text-[10px] font-extrabold text-white">
+          {count}
+        </span>
+      )}
+    </button>
+  );
+}
+
+function IndexPage() {
+  return (
+    <CartProvider>
+      <Index />
+      <CartDrawer />
+    </CartProvider>
+  );
+}
+
 function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [memberPrice, setMemberPrice] = useState(true);
+  const { add, setOpen } = useCart();
+
+  const unitPrice = memberPrice ? MEMBER_PRICE : REGULAR_PRICE;
+
+  const handleAdd = (planId: string, boxes: number, variant: string) => {
+    add({
+      id: `bb-${planId}-${memberPrice ? "m" : "r"}`,
+      name: "BB 神采速纖飲",
+      variant: `${variant}・${memberPrice ? "會員價" : "原價"}`,
+      price: unitPrice * boxes,
+      originalPrice: REGULAR_PRICE * boxes,
+      image: bbProduct.url,
+    });
+  };
 
   return (
     <div className="text-foreground pb-20 md:pb-0">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1180px] items-center justify-between px-4 py-3">
+      <nav className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
+        <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-4 px-4 py-3">
           <a href="#" className="flex items-center gap-3">
             <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-brand to-medical text-xl font-black text-white shadow-md shadow-brand/10">
               B
             </div>
             <div>
               <div className="text-lg font-black leading-tight tracking-tight text-foreground">
-                bioid full your life
+                bioid <span className="font-serif text-clay">LIFEFUL</span>
               </div>
               <div className="mt-0.5 inline-block rounded bg-clay-soft px-2 py-0.5 text-[11px] font-bold tracking-wider text-clay">
                 BB神采速纖飲
               </div>
             </div>
           </a>
-          <div className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
+          <div className="hidden items-center gap-6 text-sm font-medium text-muted-foreground lg:flex">
             {navLinks.map((l) => (
               <a key={l.href} href={l.href} className="transition-colors hover:text-brand">
                 {l.label}
               </a>
             ))}
           </div>
-          <LineButton size="sm" label="LINE 綁定會員" />
+          <div className="flex items-center gap-2">
+            <CartButton />
+            <LineButton size="sm" label="LINE 會員" className="hidden sm:inline-flex" />
+          </div>
         </div>
       </nav>
 
@@ -214,11 +294,11 @@ function Index() {
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-md">
           <img
             src={bbBanner}
-            alt="BB神采速纖飲 Banner"
-            width={1600}
-            height={640}
+            alt="BB神采速纖飲 由內而外 養出神采自信"
+            width={1920}
+            height={1080}
             fetchPriority="high"
-            className="block aspect-[5/2] w-full object-cover"
+            className="block w-full object-cover"
           />
         </div>
       </div>
@@ -229,41 +309,44 @@ function Index() {
           <div className="flex flex-col lg:col-span-7">
             <div className="mb-4 inline-flex items-center gap-2 self-start rounded-full border border-brand/20 bg-brand-soft px-3 py-1.5 text-xs font-bold text-brand">
               <span className="h-2 w-2 animate-pulse rounded-full bg-brand" />
-              國家健康食品認證 (衛部健食字第A00439號)
+              國家健康食品認證 衛部健食字第A00439號「抗疲勞功能」
             </div>
             <h1 className="mb-4 text-3xl font-black leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-              告別透支的今日
+              由內而外
               <br />
-              <span className="text-gradient">煥發神采活力，重塑纖體自信</span>
+              <span className="text-gradient">養出神采自信</span>
             </h1>
             <p className="mb-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              當忙碌作息與高壓節奏掏空了身體的蓄電量，疲勞不只是感覺，更是生理平衡失調的警報。
+              專業配方 × 科學營養 × 美麗加倍。
               <strong className="text-foreground">BB 神采速纖飲</strong>
-              融合四大關鍵活力美妍因子，從底層啟動能量修復與代謝機制，幫助您重現彈力飽滿，擁有勻稱、神采奕奕的輕盈體態。
+              融合膠原蛋白、牛磺酸、BCAA 與 B 群，每日一包補充關鍵營養，協助延緩運動後疲勞發生，喚回煥然神采。
             </p>
             <div className="mb-6 flex flex-wrap gap-3">
               <a
-                href="#offer"
-                className="rounded-full bg-gradient-to-r from-brand to-brand-dark px-6 py-3.5 text-center font-bold text-brand-foreground shadow-lg shadow-brand/10 transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                href="#order"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand to-brand-dark px-6 py-3.5 text-center font-bold text-brand-foreground shadow-lg shadow-brand/10 transition-all hover:-translate-y-0.5 hover:shadow-xl"
               >
-                立即綁定 LINE 領取方案
+                <ShoppingCart className="h-4 w-4" />
+                立即購買
               </a>
               <a
                 href="#science"
                 className="rounded-full border border-border bg-muted px-6 py-3.5 text-center font-bold text-foreground transition-all hover:bg-secondary"
               >
-                瞭解「調補護暢」機制
+                了解配方科學
               </a>
             </div>
             <div className="flex flex-wrap gap-2">
-              {["國家小綠人健食認證", "機能美妍：膠原蛋白 + 牛磺酸", "動力續航：B群 + 活性BCAA"].map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs font-semibold text-muted-foreground"
-                >
-                  {t}
-                </span>
-              ))}
+              {["國家小綠人健食認證", "膠原蛋白 彈潤水嫩", "B 群營養 增強體力", "支鏈胺基酸 促進代謝"].map(
+                (t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs font-semibold text-muted-foreground"
+                  >
+                    {t}
+                  </span>
+                ),
+              )}
             </div>
           </div>
 
@@ -271,33 +354,36 @@ function Index() {
             <div className="relative flex flex-col items-center overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-xl">
               <div className="absolute right-0 top-0 h-full w-1.5 bg-gradient-to-b from-brand to-clay" />
               <div className="mb-3 text-[11px] font-black uppercase tracking-wider text-clay">
-                Product Showcase
+                B COMPLEX &amp; COLLAGEN
               </div>
               <div className="mb-4 flex w-full justify-center rounded-2xl border border-dashed border-brand/15 bg-brand-soft/40 p-2.5">
                 <img
                   src={bbProduct.url}
-                  alt="BB神采速纖飲 明星展示"
+                  alt="BB神采速纖飲 包裝盒"
                   width={800}
                   height={1024}
                   loading="lazy"
                   className="w-auto max-h-[500px] rounded-xl border border-border object-contain shadow-lg"
                 />
               </div>
-              <p className="mb-4 text-center text-xs leading-relaxed text-muted-foreground">
-                認明小綠人認證，高科技醫學配方，由內而外養出神采自信。我們倡導「深層培元與內外和諧」，透過精準營養與機能成分導入，助您神采飛揚、活力回充。
-              </p>
               <div className="grid w-full grid-cols-2 gap-3">
                 <div className="rounded-xl border border-border bg-secondary/60 p-3 text-center">
-                  <span className="block text-xl font-extrabold text-brand">4 大</span>
-                  <span className="text-[11px] font-medium text-muted-foreground">活性黃金配方</span>
+                  <span className="block text-xl font-extrabold text-brand">10 包</span>
+                  <span className="text-[11px] font-medium text-muted-foreground">每盒裝量</span>
                 </div>
                 <div className="rounded-xl border border-border bg-secondary/60 p-3 text-center">
-                  <span className="block text-xl font-extrabold text-brand">10 包/盒</span>
-                  <span className="text-[11px] font-medium text-muted-foreground">精巧高機能包裝</span>
+                  <span className="block text-xl font-extrabold text-brand">A00439</span>
+                  <span className="text-[11px] font-medium text-muted-foreground">健食字號</span>
                 </div>
-                <div className="col-span-2 rounded-xl border border-border bg-secondary/60 p-3 text-center">
-                  <span className="block text-sm font-extrabold text-foreground">調補護暢 · 運行邏輯</span>
-                  <span className="text-[11px] font-medium text-muted-foreground">順應氣力運行的中式調和思維</span>
+                <div className="col-span-2 rounded-xl border border-clay/20 bg-clay-soft/40 p-3 text-center">
+                  <span className="block text-[11px] font-bold tracking-wider text-clay">
+                    會員價 限時優惠
+                  </span>
+                  <div className="mt-1 flex items-baseline justify-center gap-2">
+                    <span className="text-sm text-muted-foreground line-through">NT${REGULAR_PRICE}</span>
+                    <span className="text-2xl font-black text-clay">NT${MEMBER_PRICE}</span>
+                    <span className="text-xs text-muted-foreground">／盒</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -373,9 +459,6 @@ function Index() {
               </div>
             ))}
           </div>
-          <div className="mt-4 rounded-xl border border-clay/20 bg-clay-soft/50 p-4 text-xs leading-relaxed text-clay">
-            ※本頁所述之「調、補、護、暢」機制與「保護罩、防護層」為生物能量與日常保健比喻，旨在輔助消費者理解生理機能調節，非醫療宣稱。
-          </div>
         </div>
       </section>
 
@@ -424,38 +507,15 @@ function Index() {
         </div>
       </section>
 
-      {/* Trust framework */}
-      <section className="border-b border-border bg-card py-16">
-        <div className="mx-auto max-w-[1180px] px-4">
-          <div className="mb-12 max-w-3xl">
-            <h2 className="mb-3 text-2xl font-extrabold text-foreground sm:text-3xl">
-              此架構如何賦予網站高效的「信任與轉換」
-            </h2>
-            <p className="text-sm text-muted-foreground sm:text-base">
-              跳脫純品牌文案的空洞，本結構符合現代健康品消費心智：從「共情」到「循證」，進而促成「行動」。
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {trust.map((t) => (
-              <div key={t.n} className="rounded-2xl border border-border bg-secondary/50 p-6 shadow-sm">
-                <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-foreground">
-                  <span className="text-lg font-extrabold text-brand">{t.n}</span>
-                  {t.t}
-                </h3>
-                <p className="text-sm leading-relaxed text-foreground/70">{t.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Scenarios */}
+      {/* Scenarios — 適合怎樣的你/妳 */}
       <section className="py-16">
         <div className="mx-auto max-w-[1180px] px-4">
           <div className="mb-12 max-w-3xl">
-            <h2 className="mb-3 text-2xl font-extrabold text-foreground sm:text-3xl">典型調理情境</h2>
+            <h2 className="mb-3 text-2xl font-extrabold text-foreground sm:text-3xl">
+              適合怎樣的你／妳
+            </h2>
             <p className="text-sm text-muted-foreground sm:text-base">
-              本配方設計契合兩大現代都市亞健康群體的體質所需，提供溫和而高效的狀態支持。
+              如果你也有以下狀態，BB 神采速纖飲就是為你而生的日常營養夥伴。
             </p>
           </div>
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -481,7 +541,7 @@ function Index() {
                     <ul className="space-y-1 text-xs text-foreground/80">
                       {s.bullets.map((b) => (
                         <li key={b} className="flex items-center gap-2 font-semibold">
-                          <span className="text-brand">✓</span> {b}
+                          <Check className="h-3.5 w-3.5 text-brand" /> {b}
                         </li>
                       ))}
                     </ul>
@@ -505,94 +565,183 @@ function Index() {
         </div>
       </section>
 
-      {/* Offer */}
-      <section id="offer" className="border-t border-border bg-secondary/50 py-16">
+      {/* Order */}
+      <section id="order" className="border-t border-border bg-secondary/50 py-16">
         <div className="mx-auto max-w-[1180px] px-4">
-          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12">
-            <div className="flex flex-col justify-between rounded-3xl border border-border bg-card p-6 shadow-xl sm:p-8 lg:col-span-7">
-              <div className="mb-6">
-                <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-line/30 bg-line/10 px-3 py-1 text-xs font-bold text-line">
-                  <span className="h-2 w-2 animate-ping rounded-full bg-line" />
-                  LINE 官方認證會員系統已串聯
-                </div>
-                <h2 className="mb-2 text-2xl font-black text-foreground">尋回身體失去的平穩與自信</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  現在不需手動填寫繁瑣個資！點擊下方綠色按鈕加入 bioid 官方 LINE 好友，即可
-                  <b className="text-foreground">一鍵完成 VIP 會員綁定</b>
-                  。除了可免費獲得由醫學專家設計的「客製化體質評估」，再享首購專屬獨家優惠！
-                </p>
+          <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+            <div className="max-w-2xl">
+              <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-clay/30 bg-clay-soft px-3 py-1 text-xs font-extrabold text-clay">
+                <Crown className="h-3.5 w-3.5" /> 立即訂購
               </div>
-
-              <div className="mb-6 rounded-2xl border border-border bg-gradient-to-br from-secondary/50 to-secondary/20 p-5">
-                <h4 className="mb-3 flex items-center gap-2 text-sm font-bold text-foreground">
-                  <span className="text-brand">✦</span> 綁定好友專屬 3 大 VIP 權益：
-                </h4>
-                <ul className="space-y-2.5 pl-1 text-xs text-foreground/80">
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-line">✓</span>
-                    <span>
-                      <b>智慧體質追蹤</b>：隨時線上檢測「調、補、護、暢」生理電力狀態。
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-line">✓</span>
-                    <span>
-                      <b>一鍵安全溯源</b>：綁定會員，隨時查詢小綠人認證批次檢驗報告。
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-line">✓</span>
-                    <span>
-                      <b>1對1 專業諮詢</b>：營養師與專業客服即時聊天在線答疑。
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="space-y-3">
-                <LineButton size="lg" label="綁定 LINE 領取客製調理方案" />
-                <p className="text-center text-[11px] text-muted-foreground">
-                  我們重視隱私，未經授權絕不向第三方透露您的個人與 LINE 資訊。
-                </p>
-              </div>
+              <h2 className="mb-2 text-2xl font-extrabold text-foreground sm:text-3xl">
+                選擇你的 BB 神采組合
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                原價 NT${REGULAR_PRICE}/盒，加入 LINE 會員立即享會員價
+                <b className="text-clay"> NT${MEMBER_PRICE}/盒</b>。
+              </p>
             </div>
+            <div className="flex items-center gap-2 rounded-full border border-border bg-card p-1">
+              <button
+                onClick={() => setMemberPrice(false)}
+                className={`rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${!memberPrice ? "bg-foreground text-background" : "text-muted-foreground"}`}
+              >
+                原價
+              </button>
+              <button
+                onClick={() => setMemberPrice(true)}
+                className={`rounded-full px-4 py-1.5 text-xs font-bold transition-colors ${memberPrice ? "bg-clay text-white" : "text-muted-foreground"}`}
+              >
+                會員價 ★
+              </button>
+            </div>
+          </div>
 
-            <div className="flex flex-col justify-between rounded-3xl border border-brand/15 bg-gradient-to-b from-brand-soft/60 to-clay-soft/30 p-6 shadow-md sm:p-8 lg:col-span-5">
-              <div className="flex flex-grow flex-col justify-start">
-                <div className="mb-4 inline-flex self-start rounded-full border border-clay/30 bg-clay-soft px-3 py-1 text-xs font-extrabold text-clay">
-                  專屬調理方案
-                </div>
-                <h3 className="mb-4 text-xl font-extrabold text-foreground">未來可模組化升級：</h3>
-                <div className="mb-4 flex w-full flex-col items-center justify-center rounded-2xl border border-dashed border-brand/20 bg-card p-4 shadow-sm">
-                  <img
-                    src={bbProduct.url}
-                    alt="BB神采速纖飲 實物包裝盒"
-                    width={800}
-                    height={1024}
-                    loading="lazy"
-                    className="mb-2 max-h-[220px] w-auto rounded-lg object-contain shadow-md"
-                  />
-                  <div className="text-xs font-bold text-foreground">【BB神采速纖飲 實物包裝盒展示】</div>
-                </div>
-                <ul className="space-y-2.5 text-xs text-foreground">
-                  {[
-                    "自適應體質測量、諮詢推薦邏輯",
-                    "國家認證健康食品安全溯源追蹤",
-                    "檢驗報告輪播與真實使用者滿意回饋",
-                    "一鍵直達 LINE 諮詢的浮動按鈕",
-                  ].map((t) => (
-                    <li key={t} className="flex items-center gap-2 font-semibold">
-                      <span className="font-extrabold text-brand">✓</span> {t}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {planOptions.map((p) => {
+              const total = unitPrice * p.boxes;
+              const orig = REGULAR_PRICE * p.boxes;
+              const featured = p.id === "trio";
+              return (
+                <div
+                  key={p.id}
+                  className={`relative flex flex-col rounded-3xl border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg ${
+                    featured ? "border-clay/40 ring-2 ring-clay/20" : "border-border"
+                  }`}
+                >
+                  {p.badge && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-clay px-3 py-1 text-[11px] font-extrabold tracking-wider text-white shadow-md">
+                      {p.badge}
+                    </span>
+                  )}
+                  <div className="mb-4 flex justify-center rounded-2xl border border-dashed border-brand/15 bg-brand-soft/30 p-3">
+                    <img
+                      src={bbProduct.url}
+                      alt={p.variant}
+                      width={400}
+                      height={400}
+                      loading="lazy"
+                      className="h-32 w-auto object-contain"
+                    />
+                  </div>
+                  <div className="mb-1 text-xs font-bold tracking-wider text-brand">
+                    {p.name}
+                  </div>
+                  <div className="mb-4 text-lg font-extrabold text-foreground">{p.variant}</div>
+
+                  <div className="mb-4 rounded-2xl bg-secondary/60 p-4">
+                    <div className="flex items-baseline gap-2">
+                      {memberPrice && (
+                        <span className="text-sm text-muted-foreground line-through">
+                          NT${orig.toLocaleString()}
+                        </span>
+                      )}
+                      <span className={`text-3xl font-black ${memberPrice ? "text-clay" : "text-foreground"}`}>
+                        NT${total.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="mt-1 text-[11px] text-muted-foreground">
+                      平均每盒 NT${unitPrice.toLocaleString()}　/　共 {p.boxes * 10} 包
+                    </div>
+                  </div>
+
+                  <ul className="mb-5 space-y-1.5 text-xs text-foreground/80">
+                    <li className="flex items-center gap-2">
+                      <Check className="h-3.5 w-3.5 text-brand" />
+                      國家健康食品認證 A00439
                     </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-6 border-t border-dashed border-border pt-4">
-                <div className="text-xs leading-relaxed text-muted-foreground">
-                  定位：<b className="text-foreground">兼具溫潤底蘊與醫學循證的精準銷售頁</b>
-                  <br />
-                  適合首波上線測試市場接受度、受眾對漢洋折衷配方的敏感度。
+                    <li className="flex items-center gap-2">
+                      <Check className="h-3.5 w-3.5 text-brand" />
+                      牛磺酸 720.18~1080.27 mg/包
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Check className="h-3.5 w-3.5 text-brand" />
+                      免運費（單筆訂單滿 NT$1,200）
+                    </li>
+                  </ul>
+
+                  <button
+                    onClick={() => handleAdd(p.id, p.boxes, p.variant)}
+                    className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full py-3 text-sm font-bold transition-all hover:-translate-y-0.5 ${
+                      featured
+                        ? "bg-gradient-to-r from-clay to-clay/80 text-white shadow-lg shadow-clay/20"
+                        : "bg-gradient-to-r from-brand to-brand-dark text-brand-foreground"
+                    }`}
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    加入購物車
+                  </button>
                 </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 rounded-2xl border border-border bg-card p-6 sm:grid-cols-3">
+            {[
+              { t: "貨到付款", d: "支援 7-11、全家門市取貨付款" },
+              { t: "多元支付", d: "Apple Pay、LINE Pay、信用卡" },
+              { t: "宅配到府", d: "新竹物流常溫配送，全台到府" },
+            ].map((it) => (
+              <div key={it.t} className="flex items-start gap-3">
+                <Check className="mt-0.5 h-4 w-4 text-brand" />
+                <div>
+                  <div className="text-sm font-bold text-foreground">{it.t}</div>
+                  <div className="text-[11px] text-muted-foreground">{it.d}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Product Spec */}
+      <section id="spec" className="border-t border-border bg-card py-16">
+        <div className="mx-auto max-w-[1180px] px-4">
+          <div className="mb-10 max-w-3xl">
+            <h2 className="mb-3 text-2xl font-extrabold text-foreground sm:text-3xl">商品規格</h2>
+            <p className="text-sm text-muted-foreground sm:text-base">
+              依《健康食品管理法》與食品安全衛生相關法規揭露之完整資訊。
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <div className="overflow-hidden rounded-2xl border border-border">
+              <table className="w-full text-sm">
+                <tbody>
+                  {productSpecs.map((s, idx) => (
+                    <tr
+                      key={s.k}
+                      className={idx % 2 === 0 ? "bg-secondary/40" : "bg-card"}
+                    >
+                      <th className="w-1/3 px-4 py-3 text-left align-top text-xs font-bold text-muted-foreground">
+                        {s.k}
+                      </th>
+                      <td className="px-4 py-3 text-sm font-medium text-foreground">{s.v}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="space-y-5">
+              <div className="rounded-2xl border border-border bg-secondary/40 p-5">
+                <h3 className="mb-2 text-sm font-extrabold text-foreground">成分</h3>
+                <p className="text-xs leading-relaxed text-foreground/80">{ingredients}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-2xl border border-border bg-secondary/40 p-5">
+                  <h3 className="mb-1 text-sm font-extrabold text-foreground">食用方法</h3>
+                  <p className="text-xs text-muted-foreground">每日 1 包，搖勻後直接飲用。</p>
+                </div>
+                <div className="rounded-2xl border border-border bg-secondary/40 p-5">
+                  <h3 className="mb-1 text-sm font-extrabold text-foreground">保存方式</h3>
+                  <p className="text-xs text-muted-foreground">
+                    置於室溫（25℃）乾燥陰涼處，避免高溫潮濕或陽光直射。
+                  </p>
+                </div>
+              </div>
+              <div className="rounded-2xl border border-clay/30 bg-clay-soft/50 p-5 text-xs leading-relaxed text-clay">
+                <b>注意事項：</b>本產品非藥品，供保健用，罹病者仍需就醫。
+                <br />
+                <b>警語：</b>本品含有少量咖啡因，對咖啡因敏感者請斟酌使用。
               </div>
             </div>
           </div>
@@ -600,15 +749,12 @@ function Index() {
       </section>
 
       {/* FAQ */}
-      <section className="border-t border-border bg-card py-16">
+      <section className="border-t border-border bg-secondary/40 py-16">
         <div className="mx-auto max-w-[1180px] px-4">
           <div className="mb-12 max-w-3xl">
             <h2 className="mb-3 text-2xl font-extrabold text-foreground sm:text-3xl">常見問題 FAQ</h2>
-            <p className="text-sm text-muted-foreground sm:text-base">
-              為客戶解答決策前的猶豫，建立誠信、踏實的第一印象。
-            </p>
           </div>
-          <div className="space-y-2 rounded-3xl border border-border p-6">
+          <div className="space-y-2 rounded-3xl border border-border bg-card p-6">
             {faqs.map((f, i) => {
               const open = openFaq === i;
               return (
@@ -629,60 +775,76 @@ function Index() {
               );
             })}
           </div>
-          <div className="mt-6 rounded-xl border border-clay/20 bg-clay-soft/50 p-4 text-xs leading-relaxed text-clay">
-            <b>法規遵循告知：</b>
-            本網頁已為您下修「清除毒素、修復端粒、逆轉生命時鐘、延長壽命」等高風險醫療性語彙。現有敘事將「科學因子」與「本草調養、固本」合理銜接，既保留了極強的轉換力，亦大幅規避了法規開罰與消保糾紛的風險。
-          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-secondary/60 py-12">
+      <footer className="border-t border-border bg-card py-12">
         <div className="mx-auto max-w-[1180px] px-4">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="md:col-span-1">
               <div className="mb-4 flex items-center gap-3">
                 <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand to-medical text-base font-extrabold text-white">
                   B
                 </div>
                 <div>
                   <div className="text-base font-extrabold leading-none tracking-tight text-foreground">
-                    bioid full your life
+                    bioid LIFEFUL
                   </div>
                   <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                    Sales Landing Page Prototype
+                    B Complex &amp; Collagen
                   </div>
                 </div>
               </div>
-              <p className="max-w-md text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                本頁面為融合醫學分子科技與傳統本草調和哲學的銷售網站原型。您可在此視覺基礎上，依品牌定位延伸為正式形象官網或直客導購落地頁。
+              <p className="max-w-md text-xs leading-relaxed text-muted-foreground">
+                bioid 致力於提供結合醫學科技與本草調和的日常活力管理方案，伴你由內而外養出神采自信。
               </p>
             </div>
             <div>
-              <h4 className="mb-3 text-sm font-bold text-foreground sm:text-base">接下來，您可以這樣做：</h4>
-              <ul className="space-y-2 text-xs text-muted-foreground">
-                {[
-                  "配置 LINE、Messenger 或 WhatsApp 直連對話按鈕",
-                  "整合中醫體質測量問卷與配方推薦系統",
-                  "加入經第三方審查的合格成分檢驗與多重重金屬零殘留檢驗標籤",
-                ].map((t) => (
-                  <li key={t} className="flex items-center gap-2 font-medium">
-                    ✓ {t}
-                  </li>
-                ))}
+              <h4 className="mb-3 text-sm font-bold text-foreground">聯絡我們</h4>
+              <ul className="space-y-1.5 text-xs text-muted-foreground">
+                <li>客服電話 / 02-25953515</li>
+                <li>客服時間 / 週一 ~ 週五 09:00 ~ 18:00</li>
+                <li>地址 / 臺北市大同區哈密街 23 巷 1-10 號 1 樓</li>
               </ul>
             </div>
+            <div>
+              <h4 className="mb-3 text-sm font-bold text-foreground">服務資訊</h4>
+              <ul className="space-y-1.5 text-xs text-muted-foreground">
+                <li>退換貨政策</li>
+                <li>運送說明</li>
+                <li>隱私權政策</li>
+                <li>反詐騙聲明</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-8 border-t border-border pt-6 text-center text-[11px] text-muted-foreground">
+            宏曄生物科技有限公司 ｜ © {new Date().getFullYear()} bioid
           </div>
         </div>
       </footer>
 
       {/* Mobile sticky bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between border-t border-border bg-background/95 p-3 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] backdrop-blur-md md:hidden">
+      <div className="fixed bottom-0 left-0 right-0 z-30 flex items-center justify-between gap-2 border-t border-border bg-background/95 p-3 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] backdrop-blur-md md:hidden">
         <div className="flex flex-col pl-1">
-          <span className="text-[10px] font-bold tracking-wider text-clay">bioid VIP 會員募集</span>
-          <span className="text-xs font-black text-foreground">一鍵綁定領首購優惠</span>
+          <span className="text-[10px] font-bold tracking-wider text-clay">會員價 NT${MEMBER_PRICE}</span>
+          <span className="text-xs font-black text-foreground">BB 神采速纖飲</span>
         </div>
-        <LineButton size="sm" label="LINE 快速綁定" className="rounded-xl" />
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setOpen(true)}
+            className="grid h-10 w-10 place-items-center rounded-full border border-border bg-card"
+            aria-label="購物車"
+          >
+            <ShoppingCart className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => handleAdd("single", 1, "1 盒（10 包）")}
+            className="rounded-full bg-gradient-to-r from-brand to-brand-dark px-4 py-2.5 text-xs font-bold text-brand-foreground"
+          >
+            加入購物車
+          </button>
+        </div>
       </div>
     </div>
   );
