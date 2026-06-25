@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ShoppingCart, Check, Crown } from "lucide-react";
-import bbBannerAsset from "@/assets/bb-banner-hero.png.asset.json";
+import bbBannerAsset from "@/assets/bb-banner-hero.jpg.asset.json";
 import bbProduct from "@/assets/bb-product-box.png.asset.json";
 import bbStep1 from "@/assets/bb-step1.jpg";
 import bbStep2 from "@/assets/bb-step2.jpg";
