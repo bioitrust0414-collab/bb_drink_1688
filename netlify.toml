@@ -1,11 +1,18 @@
+# TanStack Start is an SSR framework — NOT a static SPA.
+# The build is driven by Nitro (configured in vite.config.ts with
+# preset: "netlify"). Nitro emits:
+#   - dist/                   → static client assets (publish dir)
+#   - .netlify/v1/functions/  → SSR server function
+#   - .netlify/v1/config.json → routing/redirects (auto-generated)
+#
+# Do NOT add a SPA-style "/*  /index.html  200" redirect here — there is
+# no index.html in an SSR build and that rule would shadow the SSR
+# function for every route.
+
 [build]
   command = "npm run build"
-  publish = "dist/client"
+  publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  NITRO_PRESET = "netlify"
