@@ -150,6 +150,77 @@ const planOptions = [
   { id: "six", name: "BB 神采速纖飲", variant: "6 盒尊享（60 包）", boxes: 6, badge: "最超值" },
 ];
 
+// 其他保健品（健1、健2）— 佔位資料，待實際商品上架後替換
+type SideProduct = {
+  id: string;
+  code: string;
+  name: string;
+  tagline: string;
+  price: number;
+  // 漸層作為暫用視覺，等待實際產品圖片上傳
+  gradient: string;
+  accent: string;
+};
+
+const sideProducts: SideProduct[] = [
+  {
+    id: "j1",
+    code: "健1",
+    name: "（健1）保健品",
+    tagline: "日常防護．溫和補給",
+    price: 980,
+    gradient: "from-brand/15 via-brand-soft to-medical/15",
+    accent: "brand",
+  },
+  {
+    id: "j2",
+    code: "健2",
+    name: "（健2）保健品",
+    tagline: "深層修護．長效續航",
+    price: 1280,
+    gradient: "from-clay/15 via-clay-soft to-amber-100",
+    accent: "clay",
+  },
+];
+
+// 組合包（BB + 加購）— 以 BB 主力 + 健1/健2 搭配，享組合折扣
+type Bundle = {
+  id: string;
+  title: string;
+  items: string[];
+  originalPrice: number;
+  bundlePrice: number;
+  highlight: string;
+};
+
+const bundles: Bundle[] = [
+  {
+    id: "bundle-bb-j1",
+    title: "BB 神采組合 ＋（健1）",
+    items: ["BB 神采速纖飲 ×1 盒", "（健1）保健品 ×1"],
+    originalPrice: 980 + 980,
+    bundlePrice: 1780,
+    highlight: "省 NT$180",
+  },
+  {
+    id: "bundle-bb-j2",
+    title: "BB 神采組合 ＋（健2）",
+    items: ["BB 神采速纖飲 ×1 盒", "（健2）保健品 ×1"],
+    originalPrice: 980 + 1280,
+    bundlePrice: 1980,
+    highlight: "省 NT$280",
+  },
+  {
+    id: "bundle-bb-j1-j2",
+    title: "BB 全方位尊享組（健1 ＋ 健2）",
+    items: ["BB 神采速纖飲 ×1 盒", "（健1）保健品 ×1", "（健2）保健品 ×1"],
+    originalPrice: 980 + 980 + 1280,
+    bundlePrice: 2780,
+    highlight: "省 NT$460　最超值",
+  },
+];
+
+
 const faqs = [
   {
     q: "Q1｜BB 神采速纖飲跟一般的提神飲品有何不同？",
