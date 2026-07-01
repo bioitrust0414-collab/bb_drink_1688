@@ -13,8 +13,7 @@ import bbBcaa from "@/assets/bb-bcaa.jpg";
 import bbBcomplex from "@/assets/bb-bcomplex.jpg";
 import bbPro from "@/assets/bb-scenario-pro.jpg";
 import bbWellness from "@/assets/bb-scenario-wellness.jpg";
-import { CartProvider, useCart } from "@/lib/cart";
-import { CartDrawer } from "@/components/CartDrawer";
+import { useCart } from "@/lib/cart";
 
 const bbBanner = bbBannerAsset.url;
 
@@ -280,13 +279,9 @@ function CartButton() {
 }
 
 function IndexPage() {
-  return (
-    <CartProvider>
-      <Index />
-      <CartDrawer />
-    </CartProvider>
-  );
+  return <Index />;
 }
+
 
 function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
