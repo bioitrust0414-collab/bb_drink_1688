@@ -758,15 +758,30 @@ function Index() {
                 key={`addon-${s.id}`}
                 className="flex items-center gap-4 rounded-2xl border border-border bg-secondary/40 p-4 transition-all hover:bg-secondary/70"
               >
-                <div
-                  className={`grid h-20 w-20 shrink-0 place-items-center rounded-xl border border-border bg-gradient-to-br ${s.gradient}`}
+              <div
+                key={`addon-${s.id}`}
+                className="flex items-center gap-4 rounded-2xl border border-border bg-secondary/40 p-4 transition-all hover:bg-secondary/70"
+              >
+                <Link
+                  to="/product/$slug"
+                  params={{ slug: s.slug }}
+                  className="shrink-0"
                 >
-                  <span className={`text-2xl font-black ${s.accent === "clay" ? "text-clay" : "text-brand"}`}>
-                    {s.code}
-                  </span>
-                </div>
+                  <img
+                    src={s.image}
+                    alt={s.name}
+                    className="h-20 w-20 rounded-xl border border-border object-cover"
+                    loading="lazy"
+                  />
+                </Link>
                 <div className="flex-1">
-                  <div className="text-sm font-bold text-foreground">{s.name}</div>
+                  <Link
+                    to="/product/$slug"
+                    params={{ slug: s.slug }}
+                    className="text-sm font-bold text-foreground hover:text-brand"
+                  >
+                    {s.name}
+                  </Link>
                   <div className="mt-0.5 text-[11px] text-muted-foreground">{s.tagline}</div>
                   <div className="mt-1.5 text-base font-extrabold text-clay">
                     NT${s.price.toLocaleString()}
@@ -777,8 +792,9 @@ function Index() {
                     add({
                       id: `side-${s.id}`,
                       name: s.name,
-                      variant: s.tagline,
+                      variant: s.subtitle,
                       price: s.price,
+                      image: s.image,
                     })
                   }
                   className="shrink-0 rounded-full border border-brand/30 bg-brand-soft px-3 py-2 text-xs font-bold text-brand transition-colors hover:bg-brand hover:text-brand-foreground"
@@ -786,10 +802,7 @@ function Index() {
                   ＋ 加購
                 </button>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* 精選組合包 */}
       <section id="bundles" className="border-t border-border bg-gradient-to-b from-brand-soft/30 to-background py-16">
