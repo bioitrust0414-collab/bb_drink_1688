@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ShoppingCart, Check, Crown, Plus, Sparkles } from "lucide-react";
+import { ShoppingCart, Check, Crown, Plus, Sparkles, ArrowRight } from "lucide-react";
+import { sideProducts } from "@/lib/products";
 import bbBannerAsset from "@/assets/bb-banner-hero.png.asset.json";
 import bbProduct from "@/assets/bb-product-box.png.asset.json";
 import bbStep1 from "@/assets/bb-step1.jpg";
@@ -12,8 +13,7 @@ import bbBcaa from "@/assets/bb-bcaa.jpg";
 import bbBcomplex from "@/assets/bb-bcomplex.jpg";
 import bbPro from "@/assets/bb-scenario-pro.jpg";
 import bbWellness from "@/assets/bb-scenario-wellness.jpg";
-import { CartProvider, useCart } from "@/lib/cart";
-import { CartDrawer } from "@/components/CartDrawer";
+import { useCart } from "@/lib/cart";
 
 const bbBanner = bbBannerAsset.url;
 
@@ -150,38 +150,8 @@ const planOptions = [
   { id: "six", name: "BB 神采速纖飲", variant: "6 盒尊享（60 包）", boxes: 6, badge: "最超值" },
 ];
 
-// 其他保健品（健1、健2）— 佔位資料，待實際商品上架後替換
-type SideProduct = {
-  id: string;
-  code: string;
-  name: string;
-  tagline: string;
-  price: number;
-  // 漸層作為暫用視覺，等待實際產品圖片上傳
-  gradient: string;
-  accent: string;
-};
+// 其他保健品（健1／健2／健3）— 資料來源：@/lib/products
 
-const sideProducts: SideProduct[] = [
-  {
-    id: "j1",
-    code: "健1",
-    name: "（健1）保健品",
-    tagline: "日常防護．溫和補給",
-    price: 980,
-    gradient: "from-brand/15 via-brand-soft to-medical/15",
-    accent: "brand",
-  },
-  {
-    id: "j2",
-    code: "健2",
-    name: "（健2）保健品",
-    tagline: "深層修護．長效續航",
-    price: 1280,
-    gradient: "from-clay/15 via-clay-soft to-amber-100",
-    accent: "clay",
-  },
-];
 
 // 組合包（BB + 加購）— 以 BB 主力 + 健1/健2 搭配，享組合折扣
 type Bundle = {
@@ -196,29 +166,35 @@ type Bundle = {
 const bundles: Bundle[] = [
   {
     id: "bundle-bb-j1",
-    title: "BB 神采組合 ＋（健1）",
-    items: ["BB 神采速纖飲 ×1 盒", "（健1）保健品 ×1"],
+    title: "BB 神采組合 ＋ DHA 魚油",
+    items: ["BB 神采速纖飲 ×1 盒", "菁萃高純度 DHA 魚油 ×1 盒"],
     originalPrice: 980 + 980,
     bundlePrice: 1780,
     highlight: "省 NT$180",
   },
   {
     id: "bundle-bb-j2",
-    title: "BB 神采組合 ＋（健2）",
-    items: ["BB 神采速纖飲 ×1 盒", "（健2）保健品 ×1"],
+    title: "BB 神采組合 ＋ 晶亮 Q10",
+    items: ["BB 神采速纖飲 ×1 盒", "晶亮納豆 Q10 ×1 盒"],
     originalPrice: 980 + 1280,
     bundlePrice: 1980,
     highlight: "省 NT$280",
   },
   {
-    id: "bundle-bb-j1-j2",
-    title: "BB 全方位尊享組（健1 ＋ 健2）",
-    items: ["BB 神采速纖飲 ×1 盒", "（健1）保健品 ×1", "（健2）保健品 ×1"],
-    originalPrice: 980 + 980 + 1280,
-    bundlePrice: 2780,
-    highlight: "省 NT$460　最超值",
+    id: "bundle-bb-all",
+    title: "BB 全方位尊享組（DHA ＋ Q10 ＋ 順暢粉）",
+    items: [
+      "BB 神采速纖飲 ×1 盒",
+      "菁萃高純度 DHA 魚油 ×1 盒",
+      "晶亮納豆 Q10 ×1 盒",
+      "果寡糖順暢粉 ×1 盒",
+    ],
+    originalPrice: 980 + 980 + 1280 + 680,
+    bundlePrice: 3280,
+    highlight: "省 NT$640　最超值",
   },
 ];
+
 
 
 const faqs = [
@@ -303,13 +279,9 @@ function CartButton() {
 }
 
 function IndexPage() {
-  return (
-    <CartProvider>
-      <Index />
-      <CartDrawer />
-    </CartProvider>
-  );
+  return <Index />;
 }
+
 
 function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -775,22 +747,31 @@ function Index() {
               常一起購買・加購更划算
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {sideProducts.map((s) => (
               <div
                 key={`addon-${s.id}`}
                 className="flex items-center gap-4 rounded-2xl border border-border bg-secondary/40 p-4 transition-all hover:bg-secondary/70"
               >
-                <div
-                  className={`grid h-20 w-20 shrink-0 place-items-center rounded-xl border border-border bg-gradient-to-br ${s.gradient}`}
-                >
-                  <span className={`text-2xl font-black ${s.accent === "clay" ? "text-clay" : "text-brand"}`}>
-                    {s.code}
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <div className="text-sm font-bold text-foreground">{s.name}</div>
-                  <div className="mt-0.5 text-[11px] text-muted-foreground">{s.tagline}</div>
+                <Link to="/product/$slug" params={{ slug: s.slug }} className="shrink-0">
+                  <img
+                    src={s.image}
+                    alt={s.name}
+                    className="h-20 w-20 rounded-xl border border-border object-cover"
+                    loading="lazy"
+                  />
+                </Link>
+                <div className="flex-1 min-w-0">
+                  <Link
+                    to="/product/$slug"
+                    params={{ slug: s.slug }}
+                    className="line-clamp-2 text-sm font-bold text-foreground hover:text-brand"
+                  >
+                    {s.name}
+                  </Link>
+                  <div className="mt-0.5 text-[11px] text-muted-foreground line-clamp-1">
+                    {s.tagline}
+                  </div>
                   <div className="mt-1.5 text-base font-extrabold text-clay">
                     NT${s.price.toLocaleString()}
                   </div>
@@ -800,8 +781,9 @@ function Index() {
                     add({
                       id: `side-${s.id}`,
                       name: s.name,
-                      variant: s.tagline,
+                      variant: s.subtitle,
                       price: s.price,
+                      image: s.image,
                     })
                   }
                   className="shrink-0 rounded-full border border-brand/30 bg-brand-soft px-3 py-2 text-xs font-bold text-brand transition-colors hover:bg-brand hover:text-brand-foreground"
@@ -813,6 +795,9 @@ function Index() {
           </div>
         </div>
       </section>
+
+
+
 
       {/* 精選組合包 */}
       <section id="bundles" className="border-t border-border bg-gradient-to-b from-brand-soft/30 to-background py-16">
@@ -830,7 +815,11 @@ function Index() {
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {bundles.map((b) => {
-              const featured = b.id === "bundle-bb-j1-j2";
+              const featured = b.id === "bundle-bb-all";
+              // 找出組合包中包含的 side product 圖片
+              const bundleSideImgs = sideProducts.filter((sp) =>
+                b.items.some((it) => it.includes(sp.name.slice(0, 4)) || it.includes(sp.code))
+              );
               return (
                 <div
                   key={b.id}
@@ -842,32 +831,24 @@ function Index() {
                     {b.highlight}
                   </span>
 
-                  {/* 視覺：BB 主力 ＋ 加購品色塊 */}
-                  <div className="mb-4 flex items-center justify-center gap-2 rounded-2xl border border-dashed border-brand/15 bg-brand-soft/30 p-4">
+                  {/* 視覺：BB 主力 ＋ 加購品實際圖片 */}
+                  <div className="mb-4 flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-dashed border-brand/15 bg-brand-soft/30 p-4">
                     <img
                       src={bbProduct.url}
                       alt="BB 神采速纖飲"
                       className="h-24 w-auto object-contain"
                     />
-                    {b.items
-                      .filter((it) => it.includes("健"))
-                      .map((it) => {
-                        const code = it.includes("健1") ? "健1" : "健2";
-                        const accent = code === "健1" ? "text-brand" : "text-clay";
-                        const grad =
-                          code === "健1"
-                            ? "from-brand/15 via-brand-soft to-medical/15"
-                            : "from-clay/15 via-clay-soft to-amber-100";
-                        return (
-                          <div
-                            key={it}
-                            className={`grid h-20 w-20 shrink-0 place-items-center rounded-xl border border-border bg-gradient-to-br ${grad}`}
-                          >
-                            <span className={`text-xl font-black ${accent}`}>{code}</span>
-                          </div>
-                        );
-                      })}
+                    {bundleSideImgs.map((sp) => (
+                      <img
+                        key={sp.id}
+                        src={sp.image}
+                        alt={sp.name}
+                        className="h-20 w-20 rounded-xl border border-border object-cover"
+                        loading="lazy"
+                      />
+                    ))}
                   </div>
+
 
                   <div className="mb-1 text-xs font-bold tracking-wider text-brand">組合包</div>
                   <h3 className="mb-3 text-base font-extrabold text-foreground">{b.title}</h3>
@@ -927,42 +908,64 @@ function Index() {
               其他保健品
             </h2>
             <p className="text-sm text-muted-foreground sm:text-base">
-              暫以代號顯示，實際商品圖與詳細介紹即將上線。
+              點擊商品卡進入詳細介紹頁，了解成分、規格與適用族群。
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {sideProducts.map((s) => (
               <div
                 key={`solo-${s.id}`}
                 className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
               >
-                <div
-                  className={`mb-5 grid aspect-[4/3] place-items-center rounded-2xl border border-dashed border-border bg-gradient-to-br ${s.gradient}`}
+                <Link
+                  to="/product/$slug"
+                  params={{ slug: s.slug }}
+                  className="group mb-5 block overflow-hidden rounded-2xl border border-border bg-white"
                 >
-                  <div className="text-center">
-                    <div className={`text-5xl font-black ${s.accent === "clay" ? "text-clay" : "text-brand"}`}>
-                      {s.code}
-                    </div>
-                    <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                      Product Image Pending
-                    </div>
-                  </div>
+                  <img
+                    src={s.image}
+                    alt={s.name}
+                    className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </Link>
+                <Link
+                  to="/product/$slug"
+                  params={{ slug: s.slug }}
+                  className="mb-1 text-xs font-bold tracking-wider text-brand"
+                >
+                  {s.code}｜{s.subtitle}
+                </Link>
+                <Link
+                  to="/product/$slug"
+                  params={{ slug: s.slug }}
+                  className="mb-2 text-base font-extrabold text-foreground hover:text-brand"
+                >
+                  {s.name}
+                </Link>
+                <div className="mb-4 text-xs text-muted-foreground line-clamp-2">
+                  {s.tagline}
                 </div>
-                <div className="mb-2 text-base font-extrabold text-foreground">{s.name}</div>
-                <div className="mb-4 text-xs text-muted-foreground">{s.tagline}</div>
                 <div className="mb-5 flex items-baseline justify-between">
                   <span className="text-2xl font-black text-clay">
                     NT${s.price.toLocaleString()}
                   </span>
-                  <span className="text-[11px] text-muted-foreground">／件</span>
+                  <Link
+                    to="/product/$slug"
+                    params={{ slug: s.slug }}
+                    className="inline-flex items-center gap-1 text-xs font-bold text-brand hover:underline"
+                  >
+                    產品說明 <ArrowRight className="h-3 w-3" />
+                  </Link>
                 </div>
                 <button
                   onClick={() =>
                     add({
                       id: `side-${s.id}`,
                       name: s.name,
-                      variant: s.tagline,
+                      variant: s.subtitle,
                       price: s.price,
+                      image: s.image,
                     })
                   }
                   className="mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand to-brand-dark py-3 text-sm font-bold text-brand-foreground transition-all hover:-translate-y-0.5"
@@ -973,6 +976,7 @@ function Index() {
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
