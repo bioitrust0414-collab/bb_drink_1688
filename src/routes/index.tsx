@@ -913,42 +913,64 @@ function Index() {
               其他保健品
             </h2>
             <p className="text-sm text-muted-foreground sm:text-base">
-              暫以代號顯示，實際商品圖與詳細介紹即將上線。
+              點擊商品卡進入詳細介紹頁，了解成分、規格與適用族群。
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {sideProducts.map((s) => (
               <div
                 key={`solo-${s.id}`}
                 className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
               >
-                <div
-                  className={`mb-5 grid aspect-[4/3] place-items-center rounded-2xl border border-dashed border-border bg-gradient-to-br ${s.gradient}`}
+                <Link
+                  to="/product/$slug"
+                  params={{ slug: s.slug }}
+                  className="group mb-5 block overflow-hidden rounded-2xl border border-border bg-white"
                 >
-                  <div className="text-center">
-                    <div className={`text-5xl font-black ${s.accent === "clay" ? "text-clay" : "text-brand"}`}>
-                      {s.code}
-                    </div>
-                    <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                      Product Image Pending
-                    </div>
-                  </div>
+                  <img
+                    src={s.image}
+                    alt={s.name}
+                    className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </Link>
+                <Link
+                  to="/product/$slug"
+                  params={{ slug: s.slug }}
+                  className="mb-1 text-xs font-bold tracking-wider text-brand"
+                >
+                  {s.code}｜{s.subtitle}
+                </Link>
+                <Link
+                  to="/product/$slug"
+                  params={{ slug: s.slug }}
+                  className="mb-2 text-base font-extrabold text-foreground hover:text-brand"
+                >
+                  {s.name}
+                </Link>
+                <div className="mb-4 text-xs text-muted-foreground line-clamp-2">
+                  {s.tagline}
                 </div>
-                <div className="mb-2 text-base font-extrabold text-foreground">{s.name}</div>
-                <div className="mb-4 text-xs text-muted-foreground">{s.tagline}</div>
                 <div className="mb-5 flex items-baseline justify-between">
                   <span className="text-2xl font-black text-clay">
                     NT${s.price.toLocaleString()}
                   </span>
-                  <span className="text-[11px] text-muted-foreground">／件</span>
+                  <Link
+                    to="/product/$slug"
+                    params={{ slug: s.slug }}
+                    className="inline-flex items-center gap-1 text-xs font-bold text-brand hover:underline"
+                  >
+                    產品說明 <ArrowRight className="h-3 w-3" />
+                  </Link>
                 </div>
                 <button
                   onClick={() =>
                     add({
                       id: `side-${s.id}`,
                       name: s.name,
-                      variant: s.tagline,
+                      variant: s.subtitle,
                       price: s.price,
+                      image: s.image,
                     })
                   }
                   className="mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand to-brand-dark py-3 text-sm font-bold text-brand-foreground transition-all hover:-translate-y-0.5"
@@ -959,6 +981,7 @@ function Index() {
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
