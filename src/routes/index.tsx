@@ -820,7 +820,11 @@ function Index() {
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {bundles.map((b) => {
-              const featured = b.id === "bundle-bb-j1-j2";
+              const featured = b.id === "bundle-bb-all";
+              // 找出組合包中包含的 side product 圖片
+              const bundleSideImgs = sideProducts.filter((sp) =>
+                b.items.some((it) => it.includes(sp.name.slice(0, 4)) || it.includes(sp.code))
+              );
               return (
                 <div
                   key={b.id}
@@ -832,32 +836,24 @@ function Index() {
                     {b.highlight}
                   </span>
 
-                  {/* 視覺：BB 主力 ＋ 加購品色塊 */}
-                  <div className="mb-4 flex items-center justify-center gap-2 rounded-2xl border border-dashed border-brand/15 bg-brand-soft/30 p-4">
+                  {/* 視覺：BB 主力 ＋ 加購品實際圖片 */}
+                  <div className="mb-4 flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-dashed border-brand/15 bg-brand-soft/30 p-4">
                     <img
                       src={bbProduct.url}
                       alt="BB 神采速纖飲"
                       className="h-24 w-auto object-contain"
                     />
-                    {b.items
-                      .filter((it) => it.includes("健"))
-                      .map((it) => {
-                        const code = it.includes("健1") ? "健1" : "健2";
-                        const accent = code === "健1" ? "text-brand" : "text-clay";
-                        const grad =
-                          code === "健1"
-                            ? "from-brand/15 via-brand-soft to-medical/15"
-                            : "from-clay/15 via-clay-soft to-amber-100";
-                        return (
-                          <div
-                            key={it}
-                            className={`grid h-20 w-20 shrink-0 place-items-center rounded-xl border border-border bg-gradient-to-br ${grad}`}
-                          >
-                            <span className={`text-xl font-black ${accent}`}>{code}</span>
-                          </div>
-                        );
-                      })}
+                    {bundleSideImgs.map((sp) => (
+                      <img
+                        key={sp.id}
+                        src={sp.image}
+                        alt={sp.name}
+                        className="h-20 w-20 rounded-xl border border-border object-cover"
+                        loading="lazy"
+                      />
+                    ))}
                   </div>
+
 
                   <div className="mb-1 text-xs font-bold tracking-wider text-brand">組合包</div>
                   <h3 className="mb-3 text-base font-extrabold text-foreground">{b.title}</h3>
