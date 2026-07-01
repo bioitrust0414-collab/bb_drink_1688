@@ -27,7 +27,9 @@ export const Route = createFileRoute("/product/$slug")({
 });
 
 function ProductDetail() {
-  const { product } = Route.useLoaderData();
+  const { product } = Route.useLoaderData() as {
+    product: NonNullable<ReturnType<typeof getProductBySlug>>;
+  };
   const { add, setOpen } = useCart();
   const [qty, setQty] = useState(1);
 
