@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ShoppingCart, Check, Crown, Plus, Sparkles } from "lucide-react";
+import { ShoppingCart, Check, Crown, Plus, Sparkles, ArrowRight } from "lucide-react";
+import { sideProducts } from "@/lib/products";
 import bbBannerAsset from "@/assets/bb-banner-hero.png.asset.json";
 import bbProduct from "@/assets/bb-product-box.png.asset.json";
 import bbStep1 from "@/assets/bb-step1.jpg";
@@ -150,38 +151,8 @@ const planOptions = [
   { id: "six", name: "BB 神采速纖飲", variant: "6 盒尊享（60 包）", boxes: 6, badge: "最超值" },
 ];
 
-// 其他保健品（健1、健2）— 佔位資料，待實際商品上架後替換
-type SideProduct = {
-  id: string;
-  code: string;
-  name: string;
-  tagline: string;
-  price: number;
-  // 漸層作為暫用視覺，等待實際產品圖片上傳
-  gradient: string;
-  accent: string;
-};
+// 其他保健品（健1／健2／健3）— 資料來源：@/lib/products
 
-const sideProducts: SideProduct[] = [
-  {
-    id: "j1",
-    code: "健1",
-    name: "（健1）保健品",
-    tagline: "日常防護．溫和補給",
-    price: 980,
-    gradient: "from-brand/15 via-brand-soft to-medical/15",
-    accent: "brand",
-  },
-  {
-    id: "j2",
-    code: "健2",
-    name: "（健2）保健品",
-    tagline: "深層修護．長效續航",
-    price: 1280,
-    gradient: "from-clay/15 via-clay-soft to-amber-100",
-    accent: "clay",
-  },
-];
 
 // 組合包（BB + 加購）— 以 BB 主力 + 健1/健2 搭配，享組合折扣
 type Bundle = {
