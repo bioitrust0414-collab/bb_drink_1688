@@ -752,21 +752,13 @@ function Index() {
               常一起購買・加購更划算
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {sideProducts.map((s) => (
               <div
                 key={`addon-${s.id}`}
                 className="flex items-center gap-4 rounded-2xl border border-border bg-secondary/40 p-4 transition-all hover:bg-secondary/70"
               >
-              <div
-                key={`addon-${s.id}`}
-                className="flex items-center gap-4 rounded-2xl border border-border bg-secondary/40 p-4 transition-all hover:bg-secondary/70"
-              >
-                <Link
-                  to="/product/$slug"
-                  params={{ slug: s.slug }}
-                  className="shrink-0"
-                >
+                <Link to="/product/$slug" params={{ slug: s.slug }} className="shrink-0">
                   <img
                     src={s.image}
                     alt={s.name}
@@ -774,15 +766,17 @@ function Index() {
                     loading="lazy"
                   />
                 </Link>
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <Link
                     to="/product/$slug"
                     params={{ slug: s.slug }}
-                    className="text-sm font-bold text-foreground hover:text-brand"
+                    className="line-clamp-2 text-sm font-bold text-foreground hover:text-brand"
                   >
                     {s.name}
                   </Link>
-                  <div className="mt-0.5 text-[11px] text-muted-foreground">{s.tagline}</div>
+                  <div className="mt-0.5 text-[11px] text-muted-foreground line-clamp-1">
+                    {s.tagline}
+                  </div>
                   <div className="mt-1.5 text-base font-extrabold text-clay">
                     NT${s.price.toLocaleString()}
                   </div>
@@ -802,6 +796,12 @@ function Index() {
                   ＋ 加購
                 </button>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
 
 
       {/* 精選組合包 */}
