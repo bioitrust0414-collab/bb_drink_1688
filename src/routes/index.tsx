@@ -167,29 +167,35 @@ type Bundle = {
 const bundles: Bundle[] = [
   {
     id: "bundle-bb-j1",
-    title: "BB 神采組合 ＋（健1）",
-    items: ["BB 神采速纖飲 ×1 盒", "（健1）保健品 ×1"],
+    title: "BB 神采組合 ＋ DHA 魚油",
+    items: ["BB 神采速纖飲 ×1 盒", "菁萃高純度 DHA 魚油 ×1 盒"],
     originalPrice: 980 + 980,
     bundlePrice: 1780,
     highlight: "省 NT$180",
   },
   {
     id: "bundle-bb-j2",
-    title: "BB 神采組合 ＋（健2）",
-    items: ["BB 神采速纖飲 ×1 盒", "（健2）保健品 ×1"],
+    title: "BB 神采組合 ＋ 晶亮 Q10",
+    items: ["BB 神采速纖飲 ×1 盒", "晶亮納豆 Q10 ×1 盒"],
     originalPrice: 980 + 1280,
     bundlePrice: 1980,
     highlight: "省 NT$280",
   },
   {
-    id: "bundle-bb-j1-j2",
-    title: "BB 全方位尊享組（健1 ＋ 健2）",
-    items: ["BB 神采速纖飲 ×1 盒", "（健1）保健品 ×1", "（健2）保健品 ×1"],
-    originalPrice: 980 + 980 + 1280,
-    bundlePrice: 2780,
-    highlight: "省 NT$460　最超值",
+    id: "bundle-bb-all",
+    title: "BB 全方位尊享組（DHA ＋ Q10 ＋ 順暢粉）",
+    items: [
+      "BB 神采速纖飲 ×1 盒",
+      "菁萃高純度 DHA 魚油 ×1 盒",
+      "晶亮納豆 Q10 ×1 盒",
+      "果寡糖順暢粉 ×1 盒",
+    ],
+    originalPrice: 980 + 980 + 1280 + 680,
+    bundlePrice: 3280,
+    highlight: "省 NT$640　最超值",
   },
 ];
+
 
 
 const faqs = [
