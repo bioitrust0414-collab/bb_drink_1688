@@ -58,13 +58,13 @@ const problems = [
 const steps = [
   {
     tag: "第一步｜調 調和平衡",
-    title: "舒緩緊繃與透支",
+    title: "膠原蛋白，美妍Q彈",
     desc: "舒緩日常緊繃節奏，調理因過度消耗而混亂的身體平衡，先「清解」蓄積負擔。",
     img: bbStep1,
   },
   {
     tag: "第二步｜補 深層培元",
-    title: "充盈身體底蘊",
+    title: "活力牛磺酸，速效提神",
     desc: "導入精純B群與牛磺酸，如細雨般滋養體內能量發電機，由內而外「補給精力與神采」。",
     img: bbStep2,
   },
@@ -467,7 +467,7 @@ function Index() {
         <div className="mx-auto max-w-[1180px] px-4">
           <div className="mb-12 max-w-3xl">
             <h2 className="mb-3 text-2xl font-extrabold text-foreground sm:text-3xl">
-              現代科技本草作用：「調補護暢」循序漸進
+              健康認證，科學驗證：「調補護暢」循序漸進
             </h2>
             <p className="text-sm text-muted-foreground sm:text-base">
               結合草本調和的整體觀與現代生物學細胞能量論點，為身體與美妍打造全方位的保護罩。
