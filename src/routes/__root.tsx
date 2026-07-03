@@ -85,13 +85,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "以醫學科技與本草調和為核心打造的 BB 神采速纖飲單頁式銷售網站，聚焦疲勞管理、日常狀態調護與關鍵健康元素。",
       },
-      { property: "og:title", content: "BB神采速纖飲｜煥發神采活力，重塑纖體自信" },
+      { property: "og:title", content: "bioid full your life BB神采速纖飲｜結合現代生物科技與本草調和的日常活力管理" },
       {
         property: "og:description",
         content: "融合四大關鍵活力美妍因子，從底層啟動能量修復與代謝機制。",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "bioid full your life BB神采速纖飲｜結合現代生物科技與本草調和的日常活力管理" },
+      { name: "description", content: "Website Booster optimizes your website for better search engine visibility and user engagement." },
+      { property: "og:description", content: "Website Booster optimizes your website for better search engine visibility and user engagement." },
+      { name: "twitter:description", content: "Website Booster optimizes your website for better search engine visibility and user engagement." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/452b3d30-8ba6-4c82-a140-e7bc8916ff6d/id-preview-8bba534f--eb7ff4cf-6861-4259-b2fb-ea3925e83f81.lovable.app-1783102365529.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/452b3d30-8ba6-4c82-a140-e7bc8916ff6d/id-preview-8bba534f--eb7ff4cf-6861-4259-b2fb-ea3925e83f81.lovable.app-1783102365529.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
