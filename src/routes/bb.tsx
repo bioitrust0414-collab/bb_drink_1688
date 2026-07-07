@@ -135,7 +135,6 @@ const productSpecs = [
   { k: "保存期限", v: "24 個月" },
   { k: "產地", v: "台灣" },
   { k: "貨源", v: "公司貨" },
-  { k: "國內負責廠商", v: "宏曄生物科技有限公司｜02-25953515" },
   { k: "食品業者登錄字號", v: "A-127972230-00000-0" },
 ];
 
@@ -1105,7 +1104,7 @@ function Index() {
             </div>
           </div>
           <div className="mt-8 border-t border-border pt-6 text-center text-[11px] text-muted-foreground">
-            宏曄生物科技有限公司 ｜ © {new Date().getFullYear()} bioid
+            © {new Date().getFullYear()} bioid
           </div>
         </div>
       </footer>
