@@ -18,7 +18,7 @@ import { useCart } from "@/lib/cart";
 const bbBanner = bbBannerAsset.url;
 
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/bb")({
   head: () => ({
     meta: [
       { title: "BB神采速纖飲｜B COMPLEX & COLLAGEN｜國家健康食品認證 抗疲勞" },
