@@ -2,12 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ShoppingCart, Sparkles, ArrowRight, Search, Menu, X, Star } from "lucide-react";
 import { sideProducts, type SideProduct } from "@/lib/products";
-import bbBannerAsset from "@/assets/bb-banner-hero.png.asset.json";
-import bbProduct from "@/assets/bb-product-box.png.asset.json";
+import bbBanner from "@/assets/bb-banner-hero.png";
+import bbImage from "@/assets/bb-product-box.png";
 import { useCart } from "@/lib/cart";
-
-const bbBanner = bbBannerAsset.url;
-const bbImage = bbProduct.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({

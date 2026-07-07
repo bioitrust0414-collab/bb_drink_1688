@@ -1,9 +1,9 @@
-import z1 from "@/assets/z-plus-01.png.asset.json";
-import z2 from "@/assets/z-plus-02.png.asset.json";
-import z3 from "@/assets/z-plus-03.png.asset.json";
-import calcium from "@/assets/mal-growth-calcium.png.asset.json";
-import hangover from "@/assets/hangover-relief.jpg.asset.json";
-import night from "@/assets/night-enzyme.png.asset.json";
+import z1 from "@/assets/z-plus-01.png";
+import z2 from "@/assets/z-plus-02.png";
+import z3 from "@/assets/z-plus-03.png";
+import calcium from "@/assets/mal-growth-calcium.png";
+import hangover from "@/assets/hangover-relief.jpg";
+import night from "@/assets/night-enzyme.png";
 
 export type SideProduct = {
   id: string;
@@ -27,7 +27,7 @@ export const sideProducts: SideProduct[] = [
     id: "j1",
     code: "健1",
     slug: "dha",
-    image: z1.url,
+    image: z1,
     name: "菁萃高純度 DHA 魚油軟膠囊",
     subtitle: "DHA + EPA 雙效配方",
     tagline: "健康維持，不只一種選擇",
@@ -59,7 +59,7 @@ export const sideProducts: SideProduct[] = [
     id: "j2",
     code: "健2",
     slug: "q10",
-    image: z2.url,
+    image: z2,
     name: "晶亮納豆 Q10 軟膠囊",
     subtitle: "葉黃素 × 納豆 × Q10 複方",
     tagline: "晶亮守護 × 活力補給",
@@ -92,7 +92,7 @@ export const sideProducts: SideProduct[] = [
     id: "j3",
     code: "健3",
     slug: "prebiotic",
-    image: z3.url,
+    image: z3,
     name: "果寡糖順暢粉（體內環保）",
     subtitle: "方便補充蔬果纖維",
     tagline: "促進腸道蠕動．排便順暢好心情",
@@ -125,7 +125,7 @@ export const sideProducts: SideProduct[] = [
     id: "h1",
     code: "家1",
     slug: "growth-calcium",
-    image: calcium.url,
+    image: calcium,
     name: "好家庭 MAL 成長鈣咀嚼錠",
     subtitle: "香濃牛奶風味．每日 1 錠",
     tagline: "成長關鍵營養．每日輕鬆補給",
@@ -157,7 +157,7 @@ export const sideProducts: SideProduct[] = [
     id: "h2",
     code: "家2",
     slug: "hangover-relief",
-    image: hangover.url,
+    image: hangover,
     name: "好家庭 解酒複方膠囊",
     subtitle: "酒前保護．酒後代謝．應酬守護",
     tagline: "全方位代謝守護配方",
@@ -189,7 +189,7 @@ export const sideProducts: SideProduct[] = [
     id: "h3",
     code: "家3",
     slug: "night-enzyme",
-    image: night.url,
+    image: night,
     name: "好家庭 夜酵素複方膠囊",
     subtitle: "睡得好．代謝好．輕鬆好",
     tagline: "夜間黃金修復期專用配方",

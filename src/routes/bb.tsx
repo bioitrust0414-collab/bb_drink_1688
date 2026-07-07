@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ShoppingCart, Check, Crown, Plus, Sparkles, ArrowRight } from "lucide-react";
 import { sideProducts } from "@/lib/products";
-import bbBannerAsset from "@/assets/bb-banner-hero.png.asset.json";
-import bbProduct from "@/assets/bb-product-box.png.asset.json";
+import bbBanner from "@/assets/bb-banner-hero.png";
+import bbProduct from "@/assets/bb-product-box.png";
 import bbStep1 from "@/assets/bb-step1.jpg";
 import bbStep2 from "@/assets/bb-step2.jpg";
 import bbStep3 from "@/assets/bb-step3.jpg";
@@ -14,8 +14,6 @@ import bbBcomplex from "@/assets/bb-bcomplex.jpg";
 import bbPro from "@/assets/bb-scenario-pro.jpg";
 import bbWellness from "@/assets/bb-scenario-wellness.jpg";
 import { useCart } from "@/lib/cart";
-
-const bbBanner = bbBannerAsset.url;
 
 
 export const Route = createFileRoute("/bb")({
@@ -297,7 +295,7 @@ function Index() {
       variant: `${variant}・${memberPrice ? "會員價" : "原價"}`,
       price: unitPrice * boxes,
       originalPrice: REGULAR_PRICE * boxes,
-      image: bbProduct.url,
+      image: bbProduct,
     });
   };
 
@@ -402,7 +400,7 @@ function Index() {
               </div>
               <div className="mb-4 flex w-full justify-center rounded-2xl border border-dashed border-brand/15 bg-brand-soft/40 p-2.5">
                 <img
-                  src={bbProduct.url}
+                  src={bbProduct}
                   alt="BB神采速纖飲 包裝盒"
                   width={800}
                   height={1024}
@@ -660,7 +658,7 @@ function Index() {
                   )}
                   <div className="mb-4 flex justify-center rounded-2xl border border-dashed border-brand/15 bg-brand-soft/30 p-3">
                     <img
-                      src={bbProduct.url}
+                      src={bbProduct}
                       alt={p.variant}
                       width={400}
                       height={400}
@@ -834,7 +832,7 @@ function Index() {
                   {/* 視覺：BB 主力 ＋ 加購品實際圖片 */}
                   <div className="mb-4 flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-dashed border-brand/15 bg-brand-soft/30 p-4">
                     <img
-                      src={bbProduct.url}
+                      src={bbProduct}
                       alt="BB 神采速纖飲"
                       className="h-24 w-auto object-contain"
                     />
@@ -881,7 +879,7 @@ function Index() {
                         variant: `組合包・${b.items.length} 項`,
                         price: b.bundlePrice,
                         originalPrice: b.originalPrice,
-                        image: bbProduct.url,
+                        image: bbProduct,
                       })
                     }
                     className={`mt-auto inline-flex items-center justify-center gap-2 rounded-full py-3 text-sm font-bold transition-all hover:-translate-y-0.5 ${
