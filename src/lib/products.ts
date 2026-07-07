@@ -1,6 +1,9 @@
 import z1 from "@/assets/z-plus-01.png.asset.json";
 import z2 from "@/assets/z-plus-02.png.asset.json";
 import z3 from "@/assets/z-plus-03.png.asset.json";
+import calcium from "@/assets/mal-growth-calcium.png.asset.json";
+import hangover from "@/assets/hangover-relief.jpg.asset.json";
+import night from "@/assets/night-enzyme.png.asset.json";
 
 export type SideProduct = {
   id: string;
