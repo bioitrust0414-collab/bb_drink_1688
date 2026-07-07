@@ -1066,7 +1066,7 @@ function Index() {
       {/* Footer */}
       <footer className="border-t border-border bg-card py-12">
         <div className="mx-auto max-w-[1180px] px-4">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="md:col-span-1">
               <div className="mb-4 flex items-center gap-3">
                 <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand to-medical text-base font-extrabold text-white">
@@ -1084,14 +1084,6 @@ function Index() {
               <p className="max-w-md text-xs leading-relaxed text-muted-foreground">
                 bioid 致力於提供結合醫學科技與本草調和的日常活力管理方案，伴你由內而外養出神采自信。
               </p>
-            </div>
-            <div>
-              <h4 className="mb-3 text-sm font-bold text-foreground">聯絡我們</h4>
-              <ul className="space-y-1.5 text-xs text-muted-foreground">
-                <li>客服電話 / 02-25953515</li>
-                <li>客服時間 / 週一 ~ 週五 09:00 ~ 18:00</li>
-                <li>地址 / 臺北市大同區哈密街 23 巷 1-10 號 1 樓</li>
-              </ul>
             </div>
             <div>
               <h4 className="mb-3 text-sm font-bold text-foreground">服務資訊</h4>
