@@ -13,7 +13,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "bioid BB神采速纖飲、DHA魚油、晶亮納豆Q10、果寡糖順暢粉；好家庭成長鈣、解酒複方、夜酵素複方——一站式選購，日常活力全家守護。",
+          "bioid BB神采速纖飲、DHA魚油、晶亮納豆Q10、果寡糖順暢粉；好家庭成長鈣、活力代謝、夜酵素複方——一站式選購，日常活力全家守護。",
       },
       { property: "og:title", content: "bioid × 好家庭｜日常活力保健嚴選商店" },
       {
