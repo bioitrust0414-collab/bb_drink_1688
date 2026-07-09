@@ -16,6 +16,7 @@ export type SideProduct = {
   code: string;
   slug: string;
   image: string;
+  detailImages?: string[];
   name: string;
   subtitle: string;
   tagline: string;
