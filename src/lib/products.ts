@@ -4,6 +4,12 @@ import z3 from "@/assets/z-plus-03.png";
 import calcium from "@/assets/mal-growth-calcium.png";
 import hangover from "@/assets/hangover-relief.jpg";
 import night from "@/assets/night-enzyme.png";
+import dhaBox from "@/assets/dha-box.png.asset.json";
+import q10Box from "@/assets/q10-box.jpg.asset.json";
+import prebioticBox from "@/assets/prebiotic-box.jpg.asset.json";
+import calciumV3 from "@/assets/mal-calcium-v3.png.asset.json";
+import nightV3 from "@/assets/mal-night-v3.png.asset.json";
+import vitalityV3 from "@/assets/mal-vitality-v3.png.asset.json";
 
 export type SideProduct = {
   id: string;
