@@ -68,12 +68,31 @@ function ProductDetail() {
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-10 px-4 py-12 lg:grid-cols-2 lg:py-16">
           {/* Image */}
-          <div className="overflow-hidden rounded-3xl border border-border bg-white">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="aspect-[4/5] w-full object-cover"
-            />
+          <div className="space-y-3">
+            <div className="overflow-hidden rounded-3xl border border-border bg-white">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="aspect-[4/5] w-full object-cover"
+              />
+            </div>
+            {product.detailImages && product.detailImages.length > 0 && (
+              <div className="grid grid-cols-3 gap-3">
+                {product.detailImages.map((img, i) => (
+                  <div
+                    key={i}
+                    className="overflow-hidden rounded-xl border border-border bg-white"
+                  >
+                    <img
+                      src={img}
+                      alt={`${product.name} 詳細圖 ${i + 1}`}
+                      className="aspect-square w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Info */}
