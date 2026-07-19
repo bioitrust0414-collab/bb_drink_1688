@@ -240,7 +240,7 @@ export const sideProducts: SideProduct[] = [
     name: "好家庭 蔓越莓益生菌膠囊",
     subtitle: "150 億活菌．女性私密防護配方",
     tagline: "私密保養．腸道調整．美妍維持",
-    price: 980, // TODO: 圖片素材未提供定價,請提供正式售價
+    price: 1280,
     accent: "brand",
     highlights: [
       "Cran-Max® 蔓越莓濃縮粉，維持私密及泌尿道健康",
