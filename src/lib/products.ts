@@ -7,9 +7,10 @@ import night from "@/assets/night-enzyme.png";
 import dhaBox from "@/assets/dha-box.png.asset.json";
 import q10Box from "@/assets/q10-box.jpg.asset.json";
 import prebioticBox from "@/assets/prebiotic-box.jpg.asset.json";
-import calciumV3 from "@/assets/mal-calcium-v3.png.asset.json";
-import nightV3 from "@/assets/mal-night-v3.png.asset.json";
-import vitalityV3 from "@/assets/mal-vitality-v3.png.asset.json";
+import calciumV4 from "@/assets/mal-calcium-v4.png";
+import nightV4 from "@/assets/mal-night-v4.png";
+import vitalityV4 from "@/assets/mal-vitality-v4.png";
+import cranberryV1 from "@/assets/mal-cranberry-v1.png";
 
 export type SideProduct = {
   id: string;
@@ -135,8 +136,8 @@ export const sideProducts: SideProduct[] = [
     id: "h1",
     code: "家1",
     slug: "growth-calcium",
-    image: calciumV3.url,
-    detailImages: [calcium],
+    image: calciumV4,
+    detailImages: [calciumV4, calcium],
     name: "好家庭 MAL 成長鈣咀嚼錠",
     subtitle: "香濃牛奶風味．每日 1 錠",
     tagline: "成長關鍵營養．每日輕鬆補給",
@@ -168,8 +169,8 @@ export const sideProducts: SideProduct[] = [
     id: "h2",
     code: "家2",
     slug: "hangover-relief",
-    image: vitalityV3.url,
-    detailImages: [hangover],
+    image: vitalityV4,
+    detailImages: [vitalityV4, hangover],
     name: "好家庭 活力代謝複方膠囊",
     subtitle: "應酬與繁忙生活的極致營養對策",
     tagline: "全方位體質調理．優質能量補給",
@@ -201,8 +202,8 @@ export const sideProducts: SideProduct[] = [
     id: "h3",
     code: "家3",
     slug: "night-enzyme",
-    image: nightV3.url,
-    detailImages: [night],
+    image: nightV4,
+    detailImages: [nightV4, night],
     name: "好家庭 夜酵素複方膠囊",
     subtitle: "睡得好．代謝好．輕鬆好",
     tagline: "夜間黃金修復期專用配方",
@@ -229,6 +230,38 @@ export const sideProducts: SideProduct[] = [
     ],
     description:
       "把握夜間黃金修復期，讓身體在睡眠中同步代謝與修護。結合蔬果酵素、益生菌與舒眠因子，睡得好、代謝好、隔日輕鬆好狀態，健康由每一夜開始。",
+  },
+  {
+    id: "h4",
+    code: "家4",
+    slug: "cranberry-probiotics",
+    image: cranberryV1,
+    detailImages: [cranberryV1],
+    name: "好家庭 蔓越莓益生菌",
+    subtitle: "150 億活菌．女性專屬配方", // TODO: 待補文案確認
+    tagline: "女性守護．腸道平衡．美妍光采", // TODO: 待補文案確認
+    price: 980, // TODO: 待補正式定價
+    accent: "brand",
+    highlights: [
+      "蔓越莓萃取，含原花青素 PACs", // TODO: 待補文案確認
+      "150 億活菌，多株專利益生菌", // TODO: 待補文案確認
+      "女性專屬配方，調整體質", // TODO: 待補文案確認
+      "安心品質，專業研發", // TODO: 待補文案確認
+    ],
+    suitableFor: [
+      "重視腸道與私密處保養的女性", // TODO: 待補文案確認
+      "外食族、飲水量不足者", // TODO: 待補文案確認
+      "追求由內而外健康美麗者", // TODO: 待補文案確認
+    ],
+    specs: [
+      { k: "內容量", v: "60 粒膠囊／盒" }, // TODO: 待補正式規格
+      { k: "食用方式", v: "每日 1-2 次" }, // TODO: 待補正式規格
+      { k: "保存方式", v: "請置於陰涼乾燥處，避免高溫及陽光直射" },
+      { k: "原產地", v: "台灣" }, // TODO: 待確認
+      { k: "其他", v: "純素" }, // TODO: 待補正式規格
+    ],
+    description:
+      "蔓越莓萃取結合多株專利益生菌，專為女性打造的腸道與私密處保養配方，由內而外給予健康美麗。", // TODO: 待補正式文案
   },
 ];
 
